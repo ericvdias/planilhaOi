@@ -23,8 +23,8 @@ public class VendaDaoJDBC implements VendaDao{
         
         String sql = "INSERT "
                 + "INTO "
-                + "tb_venda (nomecliente, cpf, plano, consultor, estado)"
-                + "VALUES (?,?,?,?,?)";
+                + "tb_venda (nomecliente, cpf, plano, datavenda, consultor, estado)"
+                + "VALUES (?,?,?,?,?,?)";
         try {
 
             PreparedStatement preparacaoDaInstrucao = ConexaoBD.retornaConexao().prepareStatement(sql);
@@ -33,9 +33,9 @@ public class VendaDaoJDBC implements VendaDao{
             preparacaoDaInstrucao.setString(1, venda.getNomeCliente());
             preparacaoDaInstrucao.setString(2, venda.getCpfCliente());
             preparacaoDaInstrucao.setString(3, venda.getPlano());
-            //preparacaoDaInstrucao.setDate(4, (Date) venda.getDataVenda());
-            preparacaoDaInstrucao.setString(4, venda.getConsultor());
-            preparacaoDaInstrucao.setString(5, venda.getEstado());
+            preparacaoDaInstrucao.setDate(4, (Date) venda.getDataVenda());
+            preparacaoDaInstrucao.setString(5, venda.getConsultor());
+            preparacaoDaInstrucao.setString(6, venda.getEstado());
             
 
             preparacaoDaInstrucao.executeUpdate();

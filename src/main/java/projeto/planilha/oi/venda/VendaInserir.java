@@ -5,16 +5,26 @@
  */
 package projeto.planilha.oi.venda;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import jdk.nashorn.internal.objects.NativeString;
+import projeto.planilha.oi.dao.sql.VendaDaoJDBC;
+import projeto.planilha.oi.model.Venda;
+
 /**
  *
  * @author ericvdias
  */
-public class Venda extends javax.swing.JFrame {
+public class VendaInserir extends javax.swing.JFrame {
+
+    VendaDaoJDBC vendaDao = new VendaDaoJDBC();
 
     /**
      * Creates new form venda
      */
-    public Venda() {
+    public VendaInserir() {
         initComponents();
     }
 
@@ -31,10 +41,10 @@ public class Venda extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         lblConsultor = new javax.swing.JLabel();
         lblData = new javax.swing.JLabel();
-        txtData = new javax.swing.JTextField();
         txtConsultor = new javax.swing.JTextField();
         lblEstado = new javax.swing.JLabel();
         txtEstado = new javax.swing.JTextField();
+        txtData = new javax.swing.JFormattedTextField();
         jPanel4 = new javax.swing.JPanel();
         btnEnviar = new javax.swing.JButton();
         jtpAbas = new javax.swing.JTabbedPane();
@@ -42,8 +52,11 @@ public class Venda extends javax.swing.JFrame {
         lblNome = new javax.swing.JLabel();
         lblCpf = new javax.swing.JLabel();
         txtNomeCliente = new javax.swing.JTextField();
-        txtCpf = new javax.swing.JTextField();
+        txtCpf = new javax.swing.JFormattedTextField();
         jpPlano = new javax.swing.JPanel();
+        lblPlano = new javax.swing.JLabel();
+        txtPlano = new javax.swing.JTextField();
+        btnBuscarPlano = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -59,6 +72,12 @@ public class Venda extends javax.swing.JFrame {
 
         lblEstado.setText("Estado:");
 
+        try {
+            txtData.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -66,29 +85,30 @@ public class Venda extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblConsultor)
+                    .addComponent(lblData))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(lblConsultor)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtConsultor, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(lblData)
-                        .addGap(46, 46, 46)
-                        .addComponent(txtData, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(159, 159, 159)
-                        .addComponent(lblEstado)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtData, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(169, 169, 169)
+                        .addComponent(lblEstado))
+                    .addComponent(txtConsultor, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(551, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblData)
-                    .addComponent(lblEstado)
-                    .addComponent(txtEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lblEstado)
+                        .addComponent(txtData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lblData)
+                        .addComponent(txtEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblConsultor)
@@ -102,6 +122,11 @@ public class Venda extends javax.swing.JFrame {
         jPanel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         btnEnviar.setText("Enviar");
+        btnEnviar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEnviarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -129,6 +154,12 @@ public class Venda extends javax.swing.JFrame {
 
         lblCpf.setText("CPF:");
 
+        try {
+            txtCpf.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
         javax.swing.GroupLayout jpClienteLayout = new javax.swing.GroupLayout(jpCliente);
         jpCliente.setLayout(jpClienteLayout);
         jpClienteLayout.setHorizontalGroup(
@@ -140,8 +171,8 @@ public class Venda extends javax.swing.JFrame {
                     .addComponent(lblCpf))
                 .addGap(18, 18, 18)
                 .addGroup(jpClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtNomeCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtNomeCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(638, Short.MAX_VALUE))
         );
         jpClienteLayout.setVerticalGroup(
@@ -160,15 +191,32 @@ public class Venda extends javax.swing.JFrame {
 
         jtpAbas.addTab("Cliente", jpCliente);
 
+        lblPlano.setText("Plano:");
+
+        btnBuscarPlano.setText("Buscar");
+
         javax.swing.GroupLayout jpPlanoLayout = new javax.swing.GroupLayout(jpPlano);
         jpPlano.setLayout(jpPlanoLayout);
         jpPlanoLayout.setHorizontalGroup(
             jpPlanoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 980, Short.MAX_VALUE)
+            .addGroup(jpPlanoLayout.createSequentialGroup()
+                .addGap(16, 16, 16)
+                .addComponent(lblPlano)
+                .addGap(37, 37, 37)
+                .addComponent(txtPlano, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnBuscarPlano)
+                .addContainerGap(658, Short.MAX_VALUE))
         );
         jpPlanoLayout.setVerticalGroup(
             jpPlanoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 216, Short.MAX_VALUE)
+            .addGroup(jpPlanoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jpPlanoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblPlano)
+                    .addComponent(txtPlano, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBuscarPlano))
+                .addContainerGap(182, Short.MAX_VALUE))
         );
 
         jtpAbas.addTab("Plano", jpPlano);
@@ -188,12 +236,37 @@ public class Venda extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 425, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnEnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviarActionPerformed
+        Venda venda = new Venda();
+        
+        
+        
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        try {
+            java.sql.Date data = new java.sql.Date(format.parse(txtData.getText()).getTime());
+            venda.setDataVenda(data);
+            venda.setEstado(txtEstado.getText().toUpperCase());
+            venda.setConsultor(txtConsultor.getText().toUpperCase());
+            venda.setNomeCliente(txtNomeCliente.getText().toUpperCase());
+
+            String cpf = txtCpf.getText();
+            cpf = cpf.replace(".", "");
+            cpf = cpf.replace("-", "");
+            venda.setCpfCliente(cpf);
+
+        } catch (ParseException ex) {
+            ex.printStackTrace();
+        }
+
+        vendaDao.incluirVenda(venda);
+    }//GEN-LAST:event_btnEnviarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -212,26 +285,41 @@ public class Venda extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Venda.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VendaInserir.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Venda.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VendaInserir.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Venda.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VendaInserir.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Venda.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VendaInserir.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Venda().setVisible(true);
+                new VendaInserir().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBuscarPlano;
     private javax.swing.JButton btnEnviar;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -244,10 +332,12 @@ public class Venda extends javax.swing.JFrame {
     private javax.swing.JLabel lblData;
     private javax.swing.JLabel lblEstado;
     private javax.swing.JLabel lblNome;
+    private javax.swing.JLabel lblPlano;
     private javax.swing.JTextField txtConsultor;
-    private javax.swing.JTextField txtCpf;
-    private javax.swing.JTextField txtData;
+    private javax.swing.JFormattedTextField txtCpf;
+    private javax.swing.JFormattedTextField txtData;
     private javax.swing.JTextField txtEstado;
     private javax.swing.JTextField txtNomeCliente;
+    private javax.swing.JTextField txtPlano;
     // End of variables declaration//GEN-END:variables
 }
