@@ -15,6 +15,20 @@ public class Venda {
     private String consultor;
     private String estado;
     private Date dataVenda;
+    private int planoId;
+
+    @Override
+    public String toString() {
+        return "Venda{" + "codigo=" + codigo + ", plano=" + plano + ", nomeCliente=" + nomeCliente + ", cpfCliente=" + cpfCliente + ", consultor=" + consultor + ", estado=" + estado + ", dataVenda=" + dataVenda + ", planoId=" + planoId + '}';
+    }
+
+    public int getPlanoId() {
+        return planoId;
+    }
+
+    public void setPlanoId(int planoId) {
+        this.planoId = planoId;
+    }
 
     public String getConsultor() {
         return consultor;

@@ -5,27 +5,55 @@
  */
 package projeto.planilha.oi.venda;
 
+import java.awt.Color;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import jdk.nashorn.internal.objects.NativeString;
+import java.util.Date;
+import javax.swing.JOptionPane;
 import projeto.planilha.oi.dao.sql.VendaDaoJDBC;
 import projeto.planilha.oi.model.Venda;
+import projeto.planilha.oi.planos.ConsultaPlanos;
 
 /**
  *
  * @author ericvdias
  */
-public class VendaInserir extends javax.swing.JFrame {
+public class LancaVendas extends javax.swing.JPanel {
 
     VendaDaoJDBC vendaDao = new VendaDaoJDBC();
+    int codigoVenda = 0;
+    String tipo = "";
 
     /**
-     * Creates new form venda
+     * Creates new form TelaLancaVendas
      */
-    public VendaInserir() {
+    public LancaVendas() {
         initComponents();
+
+    }
+
+    LancaVendas(int codigo, String tipo) {
+        initComponents();
+        this.tipo = tipo;
+        codigoVenda = codigo;
+
+        if (tipo.equals("update")) {
+
+            Venda venda = vendaDao.buscarVenda(codigo);
+
+            Date dataAtual = new Date();
+            DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            String dataFormatada = dateFormat.format(venda.getDataVenda());
+
+            txtData.setText(dataFormatada);
+            txtEstado.setText(venda.getEstado());
+            txtNomeCliente.setText(venda.getNomeCliente());
+            txtCpf.setText(venda.getCpfCliente());
+            txtConsultor.setText(venda.getConsultor());
+            txtPlano.setText(venda.getPlano());
+
+        }
     }
 
     /**
@@ -37,7 +65,7 @@ public class VendaInserir extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
+        panelDinamico = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         lblConsultor = new javax.swing.JLabel();
         lblData = new javax.swing.JLabel();
@@ -45,8 +73,6 @@ public class VendaInserir extends javax.swing.JFrame {
         lblEstado = new javax.swing.JLabel();
         txtEstado = new javax.swing.JTextField();
         txtData = new javax.swing.JFormattedTextField();
-        jPanel4 = new javax.swing.JPanel();
-        btnEnviar = new javax.swing.JButton();
         jtpAbas = new javax.swing.JTabbedPane();
         jpCliente = new javax.swing.JPanel();
         lblNome = new javax.swing.JLabel();
@@ -54,13 +80,18 @@ public class VendaInserir extends javax.swing.JFrame {
         txtNomeCliente = new javax.swing.JTextField();
         txtCpf = new javax.swing.JFormattedTextField();
         jpPlano = new javax.swing.JPanel();
+        jPanel3 = new javax.swing.JPanel();
         lblPlano = new javax.swing.JLabel();
         txtPlano = new javax.swing.JTextField();
-        btnBuscarPlano = new javax.swing.JButton();
+        btnBuscaPlano = new javax.swing.JButton();
+        jPanel4 = new javax.swing.JPanel();
+        btnEnviar = new javax.swing.JButton();
+        btnFechar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(602, 439));
+        setLayout(new java.awt.BorderLayout());
 
-        jPanel1.setLayout(new java.awt.BorderLayout());
+        panelDinamico.setLayout(new java.awt.BorderLayout());
 
         jPanel2.setBackground(new java.awt.Color(153, 153, 153));
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -96,7 +127,7 @@ public class VendaInserir extends javax.swing.JFrame {
                     .addComponent(txtConsultor, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(551, Short.MAX_VALUE))
+                .addContainerGap(179, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -116,36 +147,7 @@ public class VendaInserir extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel1.add(jPanel2, java.awt.BorderLayout.PAGE_START);
-
-        jPanel4.setBackground(new java.awt.Color(153, 153, 153));
-        jPanel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-
-        btnEnviar.setText("Enviar");
-        btnEnviar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEnviarActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btnEnviar)
-                .addContainerGap(912, Short.MAX_VALUE))
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap(66, Short.MAX_VALUE)
-                .addComponent(btnEnviar)
-                .addContainerGap())
-        );
-
-        jPanel1.add(jPanel4, java.awt.BorderLayout.PAGE_END);
+        panelDinamico.add(jPanel2, java.awt.BorderLayout.PAGE_START);
 
         jtpAbas.setBackground(new java.awt.Color(204, 204, 204));
         jtpAbas.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -173,7 +175,7 @@ public class VendaInserir extends javax.swing.JFrame {
                 .addGroup(jpClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtNomeCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(638, Short.MAX_VALUE))
+                .addContainerGap(266, Short.MAX_VALUE))
         );
         jpClienteLayout.setVerticalGroup(
             jpClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -186,68 +188,110 @@ public class VendaInserir extends javax.swing.JFrame {
                 .addGroup(jpClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblCpf)
                     .addComponent(txtCpf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(148, Short.MAX_VALUE))
+                .addContainerGap(86, Short.MAX_VALUE))
         );
 
         jtpAbas.addTab("Cliente", jpCliente);
 
+        jpPlano.setLayout(new java.awt.BorderLayout());
+
         lblPlano.setText("Plano:");
 
-        btnBuscarPlano.setText("Buscar");
+        btnBuscaPlano.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/7715_16x16.png"))); // NOI18N
+        btnBuscaPlano.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscaPlanoActionPerformed(evt);
+            }
+        });
 
-        javax.swing.GroupLayout jpPlanoLayout = new javax.swing.GroupLayout(jpPlano);
-        jpPlano.setLayout(jpPlanoLayout);
-        jpPlanoLayout.setHorizontalGroup(
-            jpPlanoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpPlanoLayout.createSequentialGroup()
-                .addGap(16, 16, 16)
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(lblPlano)
                 .addGap(37, 37, 37)
                 .addComponent(txtPlano, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnBuscarPlano)
-                .addContainerGap(658, Short.MAX_VALUE))
+                .addComponent(btnBuscaPlano, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(321, Short.MAX_VALUE))
         );
-        jpPlanoLayout.setVerticalGroup(
-            jpPlanoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpPlanoLayout.createSequentialGroup()
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jpPlanoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblPlano)
                     .addComponent(txtPlano, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnBuscarPlano))
-                .addContainerGap(182, Short.MAX_VALUE))
+                    .addComponent(btnBuscaPlano, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(120, Short.MAX_VALUE))
         );
+
+        jpPlano.add(jPanel3, java.awt.BorderLayout.CENTER);
 
         jtpAbas.addTab("Plano", jpPlano);
 
-        jPanel1.add(jtpAbas, java.awt.BorderLayout.CENTER);
+        panelDinamico.add(jtpAbas, java.awt.BorderLayout.CENTER);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+        jPanel4.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        btnEnviar.setBackground(new java.awt.Color(255, 255, 255));
+        btnEnviar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/icons8-marcador-duplo-48.png"))); // NOI18N
+        btnEnviar.setToolTipText("Confirmar");
+        btnEnviar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEnviarActionPerformed(evt);
+            }
+        });
+
+        btnFechar.setBackground(new java.awt.Color(255, 255, 255));
+        btnFechar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/sair32.png"))); // NOI18N
+        btnFechar.setToolTipText("Cancelar");
+        btnFechar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFecharActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnEnviar, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnFechar, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(492, Short.MAX_VALUE))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap(66, Short.MAX_VALUE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnFechar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnEnviar, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap())
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-        );
 
-        pack();
+        panelDinamico.add(jPanel4, java.awt.BorderLayout.PAGE_END);
+
+        add(panelDinamico, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnBuscaPlanoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscaPlanoActionPerformed
+        ConsultaPlanos cadastroPlanos = new ConsultaPlanos();
+        panelDinamico.removeAll();
+        panelDinamico.add(cadastroPlanos);
+        panelDinamico.validate();
+        panelDinamico.repaint();
+    }//GEN-LAST:event_btnBuscaPlanoActionPerformed
 
     private void btnEnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviarActionPerformed
         Venda venda = new Venda();
-        
-        
-        
+
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
         try {
             java.sql.Date data = new java.sql.Date(format.parse(txtData.getText()).getTime());
@@ -261,68 +305,35 @@ public class VendaInserir extends javax.swing.JFrame {
             cpf = cpf.replace("-", "");
             venda.setCpfCliente(cpf);
 
+            ConsultaVendas consultaVendas = new ConsultaVendas();
+            panelDinamico.removeAll();
+            panelDinamico.add(consultaVendas);
+            panelDinamico.validate();
+            panelDinamico.repaint();
+
         } catch (ParseException ex) {
             ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Erro no Preenchimento da Data. Formato correto dd/mm/aaaa");
         }
 
         vendaDao.incluirVenda(venda);
     }//GEN-LAST:event_btnEnviarActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VendaInserir.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VendaInserir.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VendaInserir.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(VendaInserir.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
+    private void btnFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFecharActionPerformed
+        ConsultaVendas consultaVenda = new ConsultaVendas();
+        panelDinamico.removeAll();
+        panelDinamico.add(consultaVenda);
+        panelDinamico.validate();
+        panelDinamico.repaint();
+    }//GEN-LAST:event_btnFecharActionPerformed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new VendaInserir().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnBuscarPlano;
+    private javax.swing.JButton btnBuscaPlano;
     private javax.swing.JButton btnEnviar;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JButton btnFechar;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jpCliente;
     private javax.swing.JPanel jpPlano;
@@ -333,6 +344,7 @@ public class VendaInserir extends javax.swing.JFrame {
     private javax.swing.JLabel lblEstado;
     private javax.swing.JLabel lblNome;
     private javax.swing.JLabel lblPlano;
+    private javax.swing.JPanel panelDinamico;
     private javax.swing.JTextField txtConsultor;
     private javax.swing.JFormattedTextField txtCpf;
     private javax.swing.JFormattedTextField txtData;

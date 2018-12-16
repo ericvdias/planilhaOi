@@ -7,7 +7,9 @@ package projeto.planilha.oi.dao.sql;
 
 import java.sql.Date;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import projeto.planilha.oi.conexao.ConexaoBD;
 import projeto.planilha.oi.dao.metodos.VendaDao;
 import projeto.planilha.oi.model.Venda;
@@ -48,6 +50,81 @@ public class VendaDaoJDBC implements VendaDao{
             return null;
         }
         
+    }
+
+    @Override
+    public ArrayList<Venda> buscarVendas() {
+        ArrayList<Venda> listaDeVenda = new ArrayList<>();
+        String SQL = "SELECT * FROM tb_venda";
+        try {
+            PreparedStatement SQLPreparada = ConexaoBD.retornaConexao().prepareStatement(SQL);
+
+            ResultSet resultado = SQLPreparada.executeQuery();
+
+            while (resultado.next()) {
+                Venda venda = new Venda();
+                venda.setCodigo(resultado.getInt("codigo"));
+                venda.setNomeCliente(resultado.getString("nomecliente"));
+                venda.setCpfCliente(resultado.getString("cpf"));
+                venda.setPlano(resultado.getString("plano"));
+                venda.setDataVenda(resultado.getDate("datavenda"));
+                venda.setConsultor(resultado.getString("consultor"));
+                venda.setEstado(resultado.getString("estado"));
+                venda.setPlanoId(resultado.getInt("planoid"));
+
+                listaDeVenda.add(venda);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return listaDeVenda;
+    }
+
+    @Override
+    public Venda excluirVenda(int codigo) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Venda buscarVenda(int codigo) {
+        Venda venda = new Venda();
+        String SQL = "SELECT * FROM tb_venda where codigo = ?";
+        try {
+            PreparedStatement preparacaoDaInstrucao = ConexaoBD.retornaConexao().prepareStatement(SQL);
+            preparacaoDaInstrucao.setInt(1, codigo);
+
+            ResultSet resultado = preparacaoDaInstrucao.executeQuery();
+
+            while (resultado.next()) {
+                
+                venda = vendaObjeto(resultado);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+        return venda;
+    }
+    
+    private Venda vendaObjeto(ResultSet resultado) throws SQLException {
+        Venda venda = new Venda();
+        try {
+            venda.setCodigo(resultado.getInt("codigo"));
+            venda.setNomeCliente(resultado.getString("nomecliente"));
+            venda.setCpfCliente(resultado.getString("cpf"));
+            venda.setPlano(resultado.getString("plano"));
+            venda.setDataVenda(resultado.getDate("datavenda"));
+            venda.setConsultor(resultado.getString("consultor"));
+            venda.setEstado(resultado.getString("estado"));
+            venda.setPlanoId(resultado.getInt("planoid"));
+            System.out.println(venda.toString());
+            return venda;
+
+        } catch (SQLException ex) {
+            throw new SQLException("Erro na Conversão");
+        }
     }
     
 }
