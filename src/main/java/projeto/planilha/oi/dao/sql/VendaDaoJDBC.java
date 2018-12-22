@@ -137,6 +137,7 @@ public class VendaDaoJDBC implements VendaDao {
         //Grava as vendas no arquivo .txt
         FileWriter gravaArquivoTxt;
         
+        
         try {
             gravaArquivoTxt = new FileWriter(caminhoVenda, true);
             gravaArquivoTxt.write(vendaOffline);
