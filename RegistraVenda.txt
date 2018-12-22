@@ -1,0 +1,114 @@
+package trabalhodeprogramacaoi;
+
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.util.Scanner;
+
+public class RegistraVenda {
+
+    RetornaProximoCodigo retornaProxCodigo = new RetornaProximoCodigo();
+    String linhaItem;
+
+    String caminhoVenda;
+
+    int novoCodigoInt;
+    String novoCodigo = " ";
+    FileReader leArquivoTxt;
+
+    public String pegaUltCodigoVenda(String diretorio) {
+        caminhoVenda = diretorio + "\\src\\trabalhodeprogramacaoi\\Venda.txt";
+        File arquivo = new File(caminhoVenda);
+        if (arquivo.exists()) {
+            //Se o arquivo de vendas já existir, faz a leitura para pegar o ultimo código inserido e inserir 
+            //a próxima venda na sequencia
+
+            // Lê as vendas ja realizadas para pegar o proximo código de venda;
+            try {
+                leArquivoTxt = new FileReader(caminhoVenda);
+
+                Scanner leitor = new Scanner(leArquivoTxt);
+                while (leitor.hasNextLine()) {
+                    String linha = leitor.nextLine();
+                    String[] separaLinha = linha.split("\\|");
+
+                    novoCodigo = separaLinha[0].trim();
+
+                }
+                if (novoCodigo.equals(null) || novoCodigo == " ") {
+                    novoCodigo = "01";
+                    System.out.println(novoCodigo + " primeiro codigo");
+                } else {
+
+                    novoCodigoInt = Integer.parseInt(novoCodigo);
+                    novoCodigoInt++;
+
+                    novoCodigo = Integer.toString(novoCodigoInt);
+
+                    while (novoCodigo.length() < 2) {
+                        novoCodigo = "0" + novoCodigo;
+                    }
+                    System.out.println(novoCodigo + " - novo codigo");
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+
+            }
+        } else {
+            //Se o arquivo não existe, inicia o códio da venda em 01
+            novoCodigo = "01";
+            return novoCodigo;
+        }
+        return novoCodigo;
+    }
+    // ===================================== \\
+
+    public void gravaVenda(String nomeCliente, float totalVenda, String diretorio, String dataVenda) {
+        caminhoVenda = diretorio + "\\src\\trabalhodeprogramacaoi\\Venda.txt";
+
+        //Grava as vendas no arquivo .txt
+        FileWriter gravaArquivoTxt;
+
+        //pegaUltCodigoVenda();
+        retornaProxCodigo.pegaUltCodigoVenda(caminhoVenda);
+
+        try {
+            gravaArquivoTxt = new FileWriter(caminhoVenda, true);
+
+            //String venda = (novoCodigo + " | " + nomeCliente + " | " + totalVenda + "\n");
+            String venda = (retornaProxCodigo.novoCodigo + " | " + nomeCliente + " | " + totalVenda + " | " + dataVenda + "\n");
+            gravaArquivoTxt.write(venda);
+
+            gravaArquivoTxt.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+
+        }
+    }
+
+    //Exibe todas as vendas ja realizadas
+    public void exibeVendas(String diretorio) {
+        
+        caminhoVenda = diretorio + "\\src\\trabalhodeprogramacaoi\\Venda.txt";
+        File arquivo = new File(caminhoVenda);
+        FileReader exibeVendasTxt;
+        if (arquivo.exists()) {
+            System.out.println(" === >> Vendas << ===");
+            try {
+                exibeVendasTxt = new FileReader(caminhoVenda);
+                Scanner leitor = new Scanner(exibeVendasTxt);
+                while (leitor.hasNextLine()) {
+                    System.out.println(leitor.nextLine());
+
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }else{
+            System.out.println("Não existe nenhuma venda lançada");
+        }
+    }
+
+}

@@ -1,0 +1,129 @@
+package trabalhodeprogramacaoi;
+
+import java.io.*;
+import java.util.*;
+
+public class Cardapio {
+
+    String linhaItem;
+    Scanner leitor;
+    String codItemI;
+    int existeItem = 0;
+    float valorItem, somaVenda;
+
+    RetornaProximoCodigo retornaProxCodigo = new RetornaProximoCodigo();
+
+    String caminhoCardapio;
+
+    //Exibição do Cardapio
+    public void exibeCardapio(String diretorio) {
+        caminhoCardapio = diretorio + "\\src\\trabalhodeprogramacaoi\\Cardapio.txt";
+        FileReader leArquivoTxt;
+
+        try {
+
+            leArquivoTxt = new FileReader(caminhoCardapio);
+            Scanner leitor = new Scanner(leArquivoTxt);
+            while (leitor.hasNextLine()) {
+                System.out.println(leitor.nextLine());
+
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        //leArquivoTxt.close();
+
+    }
+
+    // Verifica se o item existe no cardapio
+    public float itemExiste(String codItem, String diretorio) {
+        caminhoCardapio = diretorio + "\\src\\trabalhodeprogramacaoi\\Cardapio.txt";
+        FileReader leArquivoTxt;
+
+        try {
+            leArquivoTxt = new FileReader(caminhoCardapio);
+            leitor = new Scanner(leArquivoTxt);
+            while (leitor.hasNextLine()) {
+                String linha = leitor.nextLine();
+                String[] separaLinha = linha.split("\\|");
+
+                //Item encontrado
+                if (codItem.equals(separaLinha[0].trim())) {
+
+                    this.existeItem = 1;
+                    return existeItem;
+                }
+
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return existeItem;
+    }
+
+    //Retorna o valor do Item e faz somatorio total da venda
+    public float valorItem(String codItem, String diretorio, int qtdeItem) {
+        caminhoCardapio = diretorio + "\\src\\trabalhodeprogramacaoi\\Cardapio.txt";
+        FileReader leArquivoTxt;
+
+        try {
+            leArquivoTxt = new FileReader(caminhoCardapio);
+            leitor = new Scanner(leArquivoTxt);
+            while (leitor.hasNextLine()) {
+                String linha = leitor.nextLine();
+                String[] separaLinha = linha.split("\\|");
+
+                //Se o item existe, retorna o valor dele
+                if (codItem.equals(separaLinha[0].trim())) {
+                    valorItem = Float.parseFloat(separaLinha[2]);
+                    somaVenda = somaVenda + (valorItem * qtdeItem);
+
+                    return somaVenda;
+                } else {
+                    // Se nao existir o item
+                    //existeItem = 0;
+
+                }
+
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return somaVenda;
+    }
+
+    //Adiciona novos itens no cardapio.txt
+    public void adicionaItemCardapio() {
+
+        retornaProxCodigo.pegaUltCodigoVenda(caminhoCardapio);
+
+        String descricaoItemNovo = "";
+        float valorItemNovo = 0;
+        Scanner leitorDescricaoItem = new Scanner(System.in);
+        Scanner leitorValorItem = new Scanner(System.in);
+        FileWriter gravaArquivoTxt;
+
+        try {
+            gravaArquivoTxt = new FileWriter(caminhoCardapio, true);
+
+            System.out.println("Informe o nome do novo item: ");
+            descricaoItemNovo = leitorDescricaoItem.nextLine();
+
+            System.out.println("Informe o valor do novo item: ");
+            valorItemNovo = leitorValorItem.nextInt();
+
+            String venda = (retornaProxCodigo.novoCodigo + " | " + descricaoItemNovo.toUpperCase() + " | " + valorItemNovo + "\n");
+            gravaArquivoTxt.write(venda);
+
+            gravaArquivoTxt.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+
+        }
+    }
+
+}

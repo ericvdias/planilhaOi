@@ -1,0 +1,128 @@
+package trabalhodeprogramacaoi;
+
+import java.text.SimpleDateFormat;
+import java.util.Scanner;
+import java.util.Date;
+
+public class TrabalhoDeProgramacaoI {
+
+    public static void main(String[] args) {
+
+        
+        //Declaração de Variaveis;
+        int opcaoMenu, PerguntaNomeCliente = 0, continuaVenda = 0, qtdeItem = 0;
+        String codigoItem, nomeCliente = "";
+        String path;
+        
+        //Pega a raiz onde o arquivo do progama foi salvo
+        path = System.getProperty("user.dir");
+
+        Scanner leitorNomeCliente = new Scanner(System.in);
+        Scanner leitorContinuaVenda = new Scanner(System.in);
+        Scanner leitorM = new Scanner(System.in);
+        Scanner leitorQitem = new Scanner(System.in);
+
+        //Instaciando Classes;
+        Cardapio cardapio = new Cardapio();
+        RegistraVenda vendas = new RegistraVenda();
+
+        //Pega a data do dia
+        Date data = new Date();
+        SimpleDateFormat formatador = new SimpleDateFormat("dd/MM/yyyy");
+        formatador.format(data);
+
+        //Opções
+        System.out.println("Qual opcao deseja realizar?" + "\n" + " 1-Iniciar uma venda" + "\n " + " 2-Adicionar Item no Cardapio" + "\n " + "  3-Consultar Vendas" + "\n " + "   4-Fechar Programa");
+
+        opcaoMenu = leitorM.nextInt();
+
+        while (opcaoMenu != 4) {
+
+            if (opcaoMenu < 1 || opcaoMenu > 4) {
+                System.out.println("  ### Opção invalida ### ");
+                System.out.println("Informe uma opção valida" + "\n" + " 1-Iniciar uma venda" + "\n " + " 2-Adicionar Item no Cardapio" + "\n " + "  3-Consultar Vendas" + "\n " + "   4-Fechar Programa");
+                opcaoMenu = leitorM.nextInt();
+            } else {
+
+                if (opcaoMenu == 1) {
+                    if (PerguntaNomeCliente == 0) { // Pergunta o nome do cliente apenas uma vez por venda
+
+                        System.out.println("Informe o nome do cliente");
+                        nomeCliente = leitorNomeCliente.nextLine().toUpperCase();
+
+                        PerguntaNomeCliente = 1;
+                    }
+                    // Exibe Cardapio:
+                    System.out.println(" ");
+                    System.out.println(" === >> Cardapio << ===");
+                    cardapio.exibeCardapio(path); // Metodo para ler o cardapio e exibi-lo
+                    System.out.println("\nInforme o codigo do item:");
+                    cardapio.existeItem = 0; // Variavel que verifica se existe o item informado na Classe Cardapio
+
+                    Scanner leitorC = new Scanner(System.in);
+                    codigoItem = leitorC.nextLine();
+
+                    cardapio.itemExiste(codigoItem, path); // Metodo para verificar se o item informado existe no cardapio
+
+                    //Tratativa para código de item inexistente
+                    while (cardapio.existeItem == 0) { // Enquanto for informado cod item que não existe (existeItem == 0), é solicitado código valido.
+                        // Quando o item existe, existeItem = 1, e sai do While
+                        System.out.println("### Item não existe ###");
+                        System.out.println("Informe um código valido");
+                        cardapio.exibeCardapio(path);
+                        codigoItem = leitorC.nextLine();
+                        cardapio.itemExiste(codigoItem, path);
+
+                    }
+
+                    System.out.println("\nInforme a quantidade de itens:");
+                    qtdeItem = leitorQitem.nextInt();
+                    cardapio.valorItem(codigoItem, path, qtdeItem); // Metodo para realizar o somatorio da venda
+
+                    System.out.println("Subtotal venda R$:" + cardapio.somaVenda);
+
+                    System.out.println("");
+                    System.out.println("Deseja adicionar mais algum item na venda?" + "\n" + " 1-Sim;" + "\n" + "  2-Nao (Finaliza Venda)");
+                    continuaVenda = leitorContinuaVenda.nextInt();
+
+                    if (continuaVenda < 1 || continuaVenda > 2) {
+                        System.out.println("  ### Opção invalida ### ");
+                        System.out.println(" Informe uma opção valida ");
+                        System.out.println("1-Sim; 2-Nao (Finaliza Venda)");
+
+                        continuaVenda = leitorContinuaVenda.nextInt();
+                    } else if (continuaVenda == 2) {
+                        vendas.gravaVenda(nomeCliente, cardapio.somaVenda, path, formatador.format(data));
+
+                        System.out.println("Venda finalizada para o cliente " + nomeCliente + ", no valor de R$" + cardapio.somaVenda);
+
+                        PerguntaNomeCliente = 0;
+                        cardapio.somaVenda = 0;
+                        nomeCliente = "";
+
+                        System.out.println(" ");
+                        System.out.println("Deseja mais alguma acao?" + "\n" + " 1-Iniciar uma venda" + "\n " + " 2-Adicionar Item no Cardapio" + "\n " + "  3-Consultar Vendas" + "\n " + "   4-Fechar Programa");
+                        opcaoMenu = leitorM.nextInt();
+                    }
+                }
+                if (opcaoMenu == 3) {
+                    
+                    vendas.exibeVendas(path); // Metodo para exibir as vendas ja lançadas
+                    System.out.println(" ");
+
+                    System.out.println("Deseja mais alguma acao?" + "\n" + " 1-Iniciar uma venda" + "\n " + " 2-Adicionar Item no Cardapio" + "\n " + "  3-Consultar Vendas" + "\n " + "   4-Fechar Programa");
+                    opcaoMenu = leitorM.nextInt();
+
+                }
+
+                if (opcaoMenu == 2) {
+                    cardapio.adicionaItemCardapio(); // Metodo para adicionar um novo item no cardapio
+
+                    System.out.println("Deseja mais alguma acao?" + "\n" + " 1-Iniciar uma venda" + "\n " + " 2-Adicionar Item no Cardapio" + "\n " + "  3-Consultar Vendas" + "\n " + "   4-Fechar Programa");
+                    opcaoMenu = leitorM.nextInt();
+                }
+            }
+        }
+    }
+
+}

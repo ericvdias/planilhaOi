@@ -1,0 +1,58 @@
+package trabalhodeprogramacaoi;
+
+import java.io.File;
+import java.io.FileReader;
+import java.util.Scanner;
+
+public class RetornaProximoCodigo {
+
+        FileReader leArquivo;
+        String novoCodigo = "";
+        int novoCodigoInt = 0;
+        
+    public String pegaUltCodigoVenda(String caminhoArquivo) {
+               
+//        File arquivo = new File(caminhoCardapio);
+        File arquivo = new File(caminhoArquivo);
+        if (arquivo.exists()) {
+            //Se o arquivo já existir, faz a leitura para pegar o ultimo código inserido
+
+            // Lê as vendas ja realizadas para pegar o proximo código de venda;
+            try {
+                leArquivo = new FileReader(caminhoArquivo);
+
+                Scanner leitor = new Scanner(leArquivo);
+                while (leitor.hasNextLine()) {
+                    String linha = leitor.nextLine();
+                    String[] separaLinha = linha.split("\\|");
+
+                    novoCodigo = separaLinha[0].trim();
+
+                }
+                if (novoCodigo.equals(null) || novoCodigo == " ") {
+                    novoCodigo = "01";
+                    System.out.println(novoCodigo + " primeiro codigo");
+                } else {
+
+                    novoCodigoInt = Integer.parseInt(novoCodigo);
+                    novoCodigoInt++;
+
+                    novoCodigo = Integer.toString(novoCodigoInt);
+
+                    while (novoCodigo.length() < 2) {
+                        novoCodigo = "0" + novoCodigo;
+                    }
+                    
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+
+            }
+        } else {
+            //Se o arquivo não existe, inicia o códio da venda em 01
+            novoCodigo = "01";
+            return novoCodigo;
+        }
+        return novoCodigo;
+    }
+}
