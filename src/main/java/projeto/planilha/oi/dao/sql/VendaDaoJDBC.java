@@ -18,11 +18,11 @@ import projeto.planilha.oi.model.Venda;
  *
  * @author ericvdias
  */
-public class VendaDaoJDBC implements VendaDao{
+public class VendaDaoJDBC implements VendaDao {
 
     @Override
     public Venda incluirVenda(Venda venda) {
-        
+
         String sql = "INSERT "
                 + "INTO "
                 + "tb_venda (nomecliente, cpf, plano, datavenda, consultor, estado)"
@@ -38,7 +38,6 @@ public class VendaDaoJDBC implements VendaDao{
             preparacaoDaInstrucao.setDate(4, (Date) venda.getDataVenda());
             preparacaoDaInstrucao.setString(5, venda.getConsultor());
             preparacaoDaInstrucao.setString(6, venda.getEstado());
-            
 
             preparacaoDaInstrucao.executeUpdate();
 
@@ -46,10 +45,13 @@ public class VendaDaoJDBC implements VendaDao{
             return venda;
 
         } catch (SQLException ex) {
+            System.out.println("Sem conexao");
+            Venda vendaOffLine = new Venda();
+                        
             ex.printStackTrace();
             return null;
         }
-        
+
     }
 
     @Override
@@ -62,6 +64,7 @@ public class VendaDaoJDBC implements VendaDao{
             ResultSet resultado = SQLPreparada.executeQuery();
 
             while (resultado.next()) {
+
                 Venda venda = new Venda();
                 venda.setCodigo(resultado.getInt("codigo"));
                 venda.setNomeCliente(resultado.getString("nomecliente"));
@@ -97,7 +100,7 @@ public class VendaDaoJDBC implements VendaDao{
             ResultSet resultado = preparacaoDaInstrucao.executeQuery();
 
             while (resultado.next()) {
-                
+
                 venda = vendaObjeto(resultado);
             }
 
@@ -107,7 +110,7 @@ public class VendaDaoJDBC implements VendaDao{
         }
         return venda;
     }
-    
+
     private Venda vendaObjeto(ResultSet resultado) throws SQLException {
         Venda venda = new Venda();
         try {
@@ -126,5 +129,5 @@ public class VendaDaoJDBC implements VendaDao{
             throw new SQLException("Erro na Conversão");
         }
     }
-    
+
 }
