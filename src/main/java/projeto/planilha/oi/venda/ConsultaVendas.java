@@ -24,9 +24,10 @@ public class ConsultaVendas extends javax.swing.JPanel {
     /**
      * Creates new form ConsultaVendas
      */
+    
     public ConsultaVendas() {
         initComponents();
-        
+        /*
         DefaultTableModel modeloDeColuna = (DefaultTableModel) tbListaVendas.getModel();
         ArrayList<Venda> listaDeVendas = vendaDao.buscarVendas();
 
@@ -47,6 +48,7 @@ public class ConsultaVendas extends javax.swing.JPanel {
             modeloDeColuna.addRow(linha);
 
         }
+        */
     }
 
     /**

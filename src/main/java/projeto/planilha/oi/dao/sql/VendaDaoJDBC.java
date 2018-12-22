@@ -5,6 +5,7 @@
  */
 package projeto.planilha.oi.dao.sql;
 
+import java.io.FileWriter;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 import projeto.planilha.oi.conexao.ConexaoBD;
 import projeto.planilha.oi.dao.metodos.VendaDao;
 import projeto.planilha.oi.model.Venda;
+import projeto.planilha.oi.offline.SalvaArquivos;
 
 /**
  *
@@ -29,7 +31,7 @@ public class VendaDaoJDBC implements VendaDao {
                 + "VALUES (?,?,?,?,?,?)";
         try {
 
-            PreparedStatement preparacaoDaInstrucao = ConexaoBD.retornaConexao().prepareStatement(sql);
+            PreparedStatement preparacaoDaInstrucao = ConexaoBD.retornaConexao(venda).prepareStatement(sql);
 
             //preparacaoDaInstrucao.setInt(1, venda.getCodigo());
             preparacaoDaInstrucao.setString(1, venda.getNomeCliente());
@@ -45,9 +47,6 @@ public class VendaDaoJDBC implements VendaDao {
             return venda;
 
         } catch (SQLException ex) {
-            System.out.println("Sem conexao");
-            Venda vendaOffLine = new Venda();
-                        
             ex.printStackTrace();
             return null;
         }
@@ -128,6 +127,34 @@ public class VendaDaoJDBC implements VendaDao {
         } catch (SQLException ex) {
             throw new SQLException("Erro na Conversão");
         }
+    }
+
+    @Override
+    public SalvaArquivos gravaVenda(Venda venda, String diretorio) {
+        String caminhoVenda = diretorio + "\\src\\main\\java\\projeto\\planilha\\oi\\offline\\Venda.txt";
+        String vendaOffline = (venda.getNomeCliente()+";"+venda.getCpfCliente()+";"+venda.getPlano()+";"+(Date) venda.getDataVenda()+";"+venda.getConsultor()+";"+venda.getEstado()+"\n") ;
+        
+        //Grava as vendas no arquivo .txt
+        FileWriter gravaArquivoTxt;
+
+        //pegaUltCodigoVenda();
+        //retornaProxCodigo.pegaUltCodigoVenda(caminhoVenda);
+        try {
+            gravaArquivoTxt = new FileWriter(caminhoVenda, true);
+
+            //String venda = (novoCodigo + " | " + nomeCliente + " | " + totalVenda + "\n");
+//            String venda = (venda. + " | " + valor + "\n");
+            gravaArquivoTxt.write(vendaOffline);
+
+            gravaArquivoTxt.close();
+
+        } catch (Exception e) {
+            System.out.println("Não gravou");
+            e.printStackTrace();
+
+        }
+
+        return null;
     }
 
 }

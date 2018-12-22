@@ -299,7 +299,8 @@ public class LancaVendas extends javax.swing.JPanel {
             venda.setEstado(txtEstado.getText().toUpperCase());
             venda.setConsultor(txtConsultor.getText().toUpperCase());
             venda.setNomeCliente(txtNomeCliente.getText().toUpperCase());
-
+            venda.setPlano(txtPlano.getText().toUpperCase());
+            
             String cpf = txtCpf.getText();
             cpf = cpf.replace(".", "");
             cpf = cpf.replace("-", "");

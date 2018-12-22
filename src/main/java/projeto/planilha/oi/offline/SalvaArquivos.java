@@ -10,7 +10,7 @@ public class SalvaArquivos {
 
     String caminhoVenda;
 
-    public void gravaVenda(String nomeCliente, float totalVenda, String diretorio, String dataVenda) {
+    public void gravaVenda(String nomeCliente, float totalVenda, String diretorio) {
         caminhoVenda = diretorio + "\\src\\projeto.planilha.oi.offline\\Venda.txt";
 
         //Grava as vendas no arquivo .txt
@@ -22,7 +22,7 @@ public class SalvaArquivos {
             gravaArquivoTxt = new FileWriter(caminhoVenda, true);
 
             //String venda = (novoCodigo + " | " + nomeCliente + " | " + totalVenda + "\n");
-            String venda = (nomeCliente + " | " + totalVenda + " | " + dataVenda + "\n");
+            String venda = (nomeCliente + " | " + totalVenda + "\n");
             gravaArquivoTxt.write(venda);
 
             gravaArquivoTxt.close();
