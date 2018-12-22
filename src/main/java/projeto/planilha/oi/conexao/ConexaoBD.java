@@ -38,10 +38,7 @@ public class ConexaoBD {
                 conexao = DriverManager.getConnection(URL, usuario, senha);
             } catch (SQLException ex) {
                 VendaDaoJDBC vendaDao = new VendaDaoJDBC();
-                System.out.println("Sem conexao");
-                System.out.println(venda.toString());
                 String path = System.getProperty("user.dir");
-
                 SalvaArquivos vendaOffline = vendaDao.gravaVenda(venda, path);
 
                 ex.printStackTrace();

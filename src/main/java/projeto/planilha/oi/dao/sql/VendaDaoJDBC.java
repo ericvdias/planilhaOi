@@ -136,16 +136,10 @@ public class VendaDaoJDBC implements VendaDao {
         
         //Grava as vendas no arquivo .txt
         FileWriter gravaArquivoTxt;
-
-        //pegaUltCodigoVenda();
-        //retornaProxCodigo.pegaUltCodigoVenda(caminhoVenda);
+        
         try {
             gravaArquivoTxt = new FileWriter(caminhoVenda, true);
-
-            //String venda = (novoCodigo + " | " + nomeCliente + " | " + totalVenda + "\n");
-//            String venda = (venda. + " | " + valor + "\n");
             gravaArquivoTxt.write(vendaOffline);
-
             gravaArquivoTxt.close();
 
         } catch (Exception e) {
