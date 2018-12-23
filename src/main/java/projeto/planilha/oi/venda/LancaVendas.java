@@ -316,9 +316,10 @@ public class LancaVendas extends javax.swing.JPanel {
             java.sql.Date data = new java.sql.Date(format.parse(txtData.getText()).getTime());
             venda.setDataVenda(data);
             venda.setEstado(txtEstado.getText().toUpperCase());
+
             venda.setConsultor(txtConsultor.getText().toUpperCase());
             venda.setNomeCliente(txtNomeCliente.getText().toUpperCase());
-            venda.setPlano(txtPlano.getText().toUpperCase());
+            venda.setPlano(String.valueOf(ComboBox.getSelectedItem()).toUpperCase());
 
             String cpf = txtCpf.getText();
             cpf = cpf.replace(".", "");

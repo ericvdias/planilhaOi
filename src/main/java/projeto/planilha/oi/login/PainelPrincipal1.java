@@ -6,6 +6,7 @@
 package projeto.planilha.oi.login;
 
 import javax.swing.JPanel;
+import projeto.planilha.oi.planos.CadastraPlanos;
 import projeto.planilha.oi.venda.ConsultaVendas;
 
 /**
@@ -33,8 +34,10 @@ public class PainelPrincipal1 extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         btnVendas = new javax.swing.JPanel();
         lblVendas = new javax.swing.JLabel();
+        btnPlanos = new javax.swing.JPanel();
+        lblPlanos = new javax.swing.JLabel();
         btnSair = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        jblSair = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         panelDinamic = new javax.swing.JPanel();
         lblBreadcrumb = new javax.swing.JLabel();
@@ -44,6 +47,7 @@ public class PainelPrincipal1 extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(102, 102, 102));
 
         btnVendas.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnVendas.setPreferredSize(new java.awt.Dimension(156, 53));
         btnVendas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 btnVendasMousePressed(evt);
@@ -58,7 +62,7 @@ public class PainelPrincipal1 extends javax.swing.JFrame {
             btnVendasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(btnVendasLayout.createSequentialGroup()
                 .addGap(43, 43, 43)
-                .addComponent(lblVendas, javax.swing.GroupLayout.DEFAULT_SIZE, 87, Short.MAX_VALUE)
+                .addComponent(lblVendas, javax.swing.GroupLayout.DEFAULT_SIZE, 103, Short.MAX_VALUE)
                 .addContainerGap())
         );
         btnVendasLayout.setVerticalGroup(
@@ -66,6 +70,32 @@ public class PainelPrincipal1 extends javax.swing.JFrame {
             .addGroup(btnVendasLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(lblVendas, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        btnPlanos.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnPlanos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnPlanosMousePressed(evt);
+            }
+        });
+
+        lblPlanos.setText("Planos");
+
+        javax.swing.GroupLayout btnPlanosLayout = new javax.swing.GroupLayout(btnPlanos);
+        btnPlanos.setLayout(btnPlanosLayout);
+        btnPlanosLayout.setHorizontalGroup(
+            btnPlanosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(btnPlanosLayout.createSequentialGroup()
+                .addGap(43, 43, 43)
+                .addComponent(lblPlanos, javax.swing.GroupLayout.DEFAULT_SIZE, 103, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        btnPlanosLayout.setVerticalGroup(
+            btnPlanosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(btnPlanosLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lblPlanos, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -77,11 +107,11 @@ public class PainelPrincipal1 extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/icons8-desligar-30.png"))); // NOI18N
-        jLabel1.setToolTipText("Sair");
-        jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
+        jblSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/icons8-desligar-30.png"))); // NOI18N
+        jblSair.setToolTipText("Sair");
+        jblSair.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                jLabel1MousePressed(evt);
+                jblSairMousePressed(evt);
             }
         });
 
@@ -91,14 +121,14 @@ public class PainelPrincipal1 extends javax.swing.JFrame {
             btnSairLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(btnSairLayout.createSequentialGroup()
                 .addGap(44, 44, 44)
-                .addComponent(jLabel1)
+                .addComponent(jblSair)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         btnSairLayout.setVerticalGroup(
             btnSairLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(btnSairLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
+                .addComponent(jblSair)
                 .addContainerGap())
         );
 
@@ -110,7 +140,8 @@ public class PainelPrincipal1 extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnVendas, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnSair, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnSair, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnPlanos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -118,6 +149,8 @@ public class PainelPrincipal1 extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(61, 61, 61)
                 .addComponent(btnVendas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnPlanos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnSair, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -135,7 +168,7 @@ public class PainelPrincipal1 extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(panelDinamic, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblBreadcrumb, javax.swing.GroupLayout.DEFAULT_SIZE, 570, Short.MAX_VALUE))
+                    .addComponent(lblBreadcrumb, javax.swing.GroupLayout.DEFAULT_SIZE, 554, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -189,9 +222,13 @@ public class PainelPrincipal1 extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_btnSairMousePressed
 
-    private void jLabel1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MousePressed
+    private void jblSairMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblSairMousePressed
         System.exit(0);
-    }//GEN-LAST:event_jLabel1MousePressed
+    }//GEN-LAST:event_jblSairMousePressed
+
+    private void btnPlanosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPlanosMousePressed
+        updatePanelDinamic("Planos", new CadastraPlanos());
+    }//GEN-LAST:event_btnPlanosMousePressed
 
     /**
      * @param args the command line arguments
@@ -229,12 +266,14 @@ public class PainelPrincipal1 extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel btnPlanos;
     private javax.swing.JPanel btnSair;
     private javax.swing.JPanel btnVendas;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JLabel jblSair;
     private javax.swing.JLabel lblBreadcrumb;
+    private javax.swing.JLabel lblPlanos;
     private javax.swing.JLabel lblVendas;
     private javax.swing.JPanel panelDinamic;
     // End of variables declaration//GEN-END:variables
