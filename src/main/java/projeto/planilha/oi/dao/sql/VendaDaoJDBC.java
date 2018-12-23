@@ -132,12 +132,11 @@ public class VendaDaoJDBC implements VendaDao {
     @Override
     public SalvaArquivos gravaVenda(Venda venda, String diretorio) {
         String caminhoVenda = diretorio + "\\src\\main\\java\\projeto\\planilha\\oi\\offline\\Venda.txt";
-        String vendaOffline = (venda.getNomeCliente()+";"+venda.getCpfCliente()+";"+venda.getPlano()+";"+(Date) venda.getDataVenda()+";"+venda.getConsultor()+";"+venda.getEstado()+"\n") ;
-        
+        String vendaOffline = (venda.getNomeCliente() + ";" + venda.getCpfCliente() + ";" + venda.getPlano() + ";" + (Date) venda.getDataVenda() + ";" + venda.getConsultor() + ";" + venda.getEstado() + "\n");
+
         //Grava as vendas no arquivo .txt
         FileWriter gravaArquivoTxt;
-        
-        
+
         try {
             gravaArquivoTxt = new FileWriter(caminhoVenda, true);
             gravaArquivoTxt.write(vendaOffline);

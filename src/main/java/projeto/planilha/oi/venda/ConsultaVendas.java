@@ -19,15 +19,16 @@ import projeto.planilha.oi.model.Venda;
  * @author ericvdias
  */
 public class ConsultaVendas extends javax.swing.JPanel {
+
     VendaDao vendaDao = new VendaDaoJDBC();
     Venda venda = new Venda();
+
     /**
      * Creates new form ConsultaVendas
      */
-    
     public ConsultaVendas() {
         initComponents();
-        /*
+
         DefaultTableModel modeloDeColuna = (DefaultTableModel) tbListaVendas.getModel();
         ArrayList<Venda> listaDeVendas = vendaDao.buscarVendas();
 
@@ -35,12 +36,12 @@ public class ConsultaVendas extends javax.swing.JPanel {
             Venda exibeCliente = listaDeVendas.get(i);
             Object[] linha = new Object[6];
             linha[0] = exibeCliente.getCodigo();
-            
+
             Date dataAtual = new Date();
             DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
             String dataFormatada = dateFormat.format(exibeCliente.getDataVenda());
             linha[1] = dataFormatada;
-            
+
             linha[2] = exibeCliente.getNomeCliente();
             linha[3] = exibeCliente.getCpfCliente();
             linha[4] = exibeCliente.getConsultor();
@@ -48,7 +49,7 @@ public class ConsultaVendas extends javax.swing.JPanel {
             modeloDeColuna.addRow(linha);
 
         }
-        */
+
     }
 
     /**
@@ -239,7 +240,7 @@ public class ConsultaVendas extends javax.swing.JPanel {
         } else {
             //JOptionPane.showMessageDialog(null, "Selecione um Planos!");
         }
-        */
+         */
     }//GEN-LAST:event_btnExcluirVendaActionPerformed
 
     private void btnAdicionarVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarVendaActionPerformed
@@ -250,7 +251,7 @@ public class ConsultaVendas extends javax.swing.JPanel {
         int codigoNovoPlanos = 0;
         /*
 
-        */
+         */
         //==> Abre a tela para inserir dados do cliente, passando o código e o tipo (insert=novo ou update=atualiza) <==\\
         LancaVendas adicionarVendas = new LancaVendas();
         panelDinamico.removeAll();
@@ -274,15 +275,20 @@ public class ConsultaVendas extends javax.swing.JPanel {
             //==> Faz a busca do cliente por qualquer parte do seu nome <==\\
             if (exibeVenda.getNomeCliente().contains(nome)) {
 
-                Object[] linha = new Object[5];
+                Object[] linha = new Object[6];
 
                 linha[0] = exibeVenda.getCodigo();
-                linha[1] = exibeVenda.getDataVenda();
-                linha[2] = exibeVenda.getNomeCliente();
-                linha[3] = exibeVenda.getConsultor();
-                
-                
 
+                Date dataAtual = new Date();
+                DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                String dataFormatada = dateFormat.format(exibeVenda.getDataVenda());
+                linha[1] = dataFormatada;
+                linha[2] = exibeVenda.getNomeCliente();
+                linha[3] = exibeVenda.getCpfCliente();
+                linha[4] = exibeVenda.getConsultor();
+                linha[5] = exibeVenda.getPlano();
+
+                
                 modeloDeColuna.addRow(linha);
             }
         }

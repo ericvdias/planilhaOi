@@ -9,9 +9,14 @@ import java.awt.Color;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import javax.swing.ComboBoxModel;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
+import projeto.planilha.oi.dao.sql.PlanoDaoJDBC;
 import projeto.planilha.oi.dao.sql.VendaDaoJDBC;
+import projeto.planilha.oi.model.Plano;
 import projeto.planilha.oi.model.Venda;
 import projeto.planilha.oi.planos.ConsultaPlanos;
 
@@ -22,6 +27,7 @@ import projeto.planilha.oi.planos.ConsultaPlanos;
 public class LancaVendas extends javax.swing.JPanel {
 
     VendaDaoJDBC vendaDao = new VendaDaoJDBC();
+    PlanoDaoJDBC planoDao = new PlanoDaoJDBC();
     int codigoVenda = 0;
     String tipo = "";
 
@@ -30,6 +36,14 @@ public class LancaVendas extends javax.swing.JPanel {
      */
     public LancaVendas() {
         initComponents();
+        System.out.println("lançavendas()");
+        DefaultComboBoxModel comboPlano = (DefaultComboBoxModel) ComboBox.getModel();
+        ArrayList<Plano> listaDePlano = planoDao.buscarPlanos();
+
+        for (int i = 0; i < listaDePlano.size(); i++) {
+            Plano exibePlano = listaDePlano.get(i);
+            comboPlano.addElement(exibePlano.getNome());
+        }
 
     }
 
@@ -84,6 +98,7 @@ public class LancaVendas extends javax.swing.JPanel {
         lblPlano = new javax.swing.JLabel();
         txtPlano = new javax.swing.JTextField();
         btnBuscaPlano = new javax.swing.JButton();
+        ComboBox = new javax.swing.JComboBox<>();
         jPanel4 = new javax.swing.JPanel();
         btnEnviar = new javax.swing.JButton();
         btnFechar = new javax.swing.JButton();
@@ -215,16 +230,20 @@ public class LancaVendas extends javax.swing.JPanel {
                 .addComponent(txtPlano, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnBuscaPlano, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(321, Short.MAX_VALUE))
+                .addGap(26, 26, 26)
+                .addComponent(ComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(228, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblPlano)
-                    .addComponent(txtPlano, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnBuscaPlano, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lblPlano)
+                        .addComponent(txtPlano, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnBuscaPlano, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(ComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(120, Short.MAX_VALUE))
         );
 
@@ -300,7 +319,7 @@ public class LancaVendas extends javax.swing.JPanel {
             venda.setConsultor(txtConsultor.getText().toUpperCase());
             venda.setNomeCliente(txtNomeCliente.getText().toUpperCase());
             venda.setPlano(txtPlano.getText().toUpperCase());
-            
+
             String cpf = txtCpf.getText();
             cpf = cpf.replace(".", "");
             cpf = cpf.replace("-", "");
@@ -330,6 +349,7 @@ public class LancaVendas extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> ComboBox;
     private javax.swing.JButton btnBuscaPlano;
     private javax.swing.JButton btnEnviar;
     private javax.swing.JButton btnFechar;

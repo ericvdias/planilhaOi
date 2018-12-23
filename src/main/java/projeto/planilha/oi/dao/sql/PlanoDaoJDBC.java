@@ -5,7 +5,14 @@
  */
 package projeto.planilha.oi.dao.sql;
 
+import java.awt.List;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import projeto.planilha.oi.conexao.ConexaoBD;
 import projeto.planilha.oi.dao.metodos.PlanoDao;
 import projeto.planilha.oi.model.Plano;
 
@@ -13,11 +20,35 @@ import projeto.planilha.oi.model.Plano;
  *
  * @author ericvdias
  */
-public class PlanoDaoJDBC implements PlanoDao{
+public class PlanoDaoJDBC implements PlanoDao {
 
     @Override
     public ArrayList<Plano> buscarPlanos() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        System.out.println("plano DAO");
+        ArrayList<Plano> listaDePlano = new ArrayList<>();
+        ArrayList list = new ArrayList();
+        String SQL = "select nome from tb_plano";
+        try {
+            PreparedStatement SQLPreparada = ConexaoBD.retornaConexao().prepareStatement(SQL);
+
+            ResultSet resultado = SQLPreparada.executeQuery();
+
+            while (resultado.next()) {
+
+                Plano plano = new Plano();
+                //plano.setCodigo(resultado.getInt("codigo"));
+                plano.setNome(resultado.getString("nome"));
+                //plano.setTipo(resultado.getString("tipo"));
+                //plano.setCategoria(resultado.getString("categoria"));
+                System.out.println(resultado.getString("nome"));
+                listaDePlano.add(plano);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return listaDePlano;
     }
 
     @Override
@@ -29,5 +60,5 @@ public class PlanoDaoJDBC implements PlanoDao{
     public Plano excluirPlano(int codigo) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
 }

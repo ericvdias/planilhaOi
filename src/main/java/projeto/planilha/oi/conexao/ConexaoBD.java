@@ -18,7 +18,7 @@ import projeto.planilha.oi.offline.SalvaArquivos;
  * @author ericvdias
  */
 public class ConexaoBD {
-
+    
     private static final String URL = "jdbc:mysql://162.241.2.192/ericvd20_conexaotelecom";
     private static final String usuario = "ericvd20_eric";
     private static final String senha = "ericvd";
