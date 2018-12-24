@@ -5,12 +5,17 @@
  */
 package projeto.planilha.oi.planos;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import projeto.planilha.oi.dao.sql.PlanoDaoJDBC;
+import projeto.planilha.oi.model.Plano;
+
 /**
  *
  * @author ericvdias
  */
 public class CadastraPlanos extends javax.swing.JPanel {
-
+    PlanoDaoJDBC planoDao = new PlanoDaoJDBC();
     /**
      * Creates new form CadastraPlanos
      */
@@ -31,47 +36,200 @@ public class CadastraPlanos extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        panelDinamico = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
+        lblData = new javax.swing.JLabel();
+        txtData = new javax.swing.JFormattedTextField();
+        jpDadosPlano = new javax.swing.JPanel();
+        lblNomePlano = new javax.swing.JLabel();
+        txtNomePlano = new javax.swing.JTextField();
+        lblTipoPlano = new javax.swing.JLabel();
+        txtTipoPlano = new javax.swing.JTextField();
+        lblCategoriaPlano = new javax.swing.JLabel();
+        txtCategoriaPlano = new javax.swing.JTextField();
+        jPanel4 = new javax.swing.JPanel();
+        btnEnviar = new javax.swing.JButton();
+        btnFechar = new javax.swing.JButton();
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/icons8-marcador-duplo-48.png"))); // NOI18N
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        setLayout(new java.awt.BorderLayout());
+
+        panelDinamico.setLayout(new java.awt.BorderLayout());
+
+        jPanel2.setBackground(new java.awt.Color(153, 153, 153));
+        jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanel2.setPreferredSize(new java.awt.Dimension(982, 75));
+
+        lblData.setText("Data:");
+
+        try {
+            txtData.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lblData)
+                .addGap(46, 46, 46)
+                .addComponent(txtData, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(808, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblData))
+                .addContainerGap(39, Short.MAX_VALUE))
+        );
+
+        panelDinamico.add(jPanel2, java.awt.BorderLayout.PAGE_START);
+
+        jpDadosPlano.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jpDadosPlano.setPreferredSize(new java.awt.Dimension(982, 110));
+
+        lblNomePlano.setText("Nome:");
+
+        lblTipoPlano.setText("Tipo:");
+
+        lblCategoriaPlano.setText("Categoria:");
+
+        txtCategoriaPlano.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                txtCategoriaPlanoActionPerformed(evt);
             }
         });
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/sair32.png"))); // NOI18N
+        javax.swing.GroupLayout jpDadosPlanoLayout = new javax.swing.GroupLayout(jpDadosPlano);
+        jpDadosPlano.setLayout(jpDadosPlanoLayout);
+        jpDadosPlanoLayout.setHorizontalGroup(
+            jpDadosPlanoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpDadosPlanoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jpDadosPlanoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblCategoriaPlano)
+                    .addComponent(lblTipoPlano)
+                    .addComponent(lblNomePlano))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jpDadosPlanoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(txtCategoriaPlano, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtTipoPlano, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtNomePlano, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(755, Short.MAX_VALUE))
+        );
+        jpDadosPlanoLayout.setVerticalGroup(
+            jpDadosPlanoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpDadosPlanoLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jpDadosPlanoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblNomePlano)
+                    .addComponent(txtNomePlano, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jpDadosPlanoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblTipoPlano)
+                    .addComponent(txtTipoPlano, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jpDadosPlanoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtCategoriaPlano, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblCategoriaPlano))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(35, 35, 35)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jButton2)
-                .addContainerGap(224, Short.MAX_VALUE))
+        panelDinamico.add(jpDadosPlano, java.awt.BorderLayout.LINE_START);
+
+        jPanel4.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        btnEnviar.setBackground(new java.awt.Color(255, 255, 255));
+        btnEnviar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/icons8-marcador-duplo-48.png"))); // NOI18N
+        btnEnviar.setToolTipText("Confirmar");
+        btnEnviar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEnviarActionPerformed(evt);
+            }
+        });
+
+        btnFechar.setBackground(new java.awt.Color(255, 255, 255));
+        btnFechar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/sair32.png"))); // NOI18N
+        btnFechar.setToolTipText("Cancelar");
+        btnFechar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFecharActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnEnviar, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnFechar, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(864, Short.MAX_VALUE))
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(233, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton2)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(23, 23, 23))
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap(66, Short.MAX_VALUE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnFechar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnEnviar, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addContainerGap())
         );
+
+        panelDinamico.add(jPanel4, java.awt.BorderLayout.PAGE_END);
+
+        add(panelDinamico, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnEnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviarActionPerformed
+        Plano plano = new Plano();
+
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+
+        //     java.sql.Date data = new java.sql.Date(format.parse(txtData.getText()).getTime());
+        plano.setNome(txtNomePlano.getText().toUpperCase());
+        plano.setTipo(txtTipoPlano.getText().toUpperCase());
+        plano.setCategoria(txtCategoriaPlano.getText().toUpperCase());
+
+        planoDao.incluirPlano(plano);
+    }//GEN-LAST:event_btnEnviarActionPerformed
+
+    private void btnFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFecharActionPerformed
+        /*ConsultaVendas consultaVenda = new ConsultaVendas();
+        panelDinamico.removeAll();
+        panelDinamico.add(consultaVenda);
+        panelDinamico.validate();
+        panelDinamico.repaint();
+*/
+    }//GEN-LAST:event_btnFecharActionPerformed
+
+    private void txtCategoriaPlanoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCategoriaPlanoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_txtCategoriaPlanoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton btnEnviar;
+    private javax.swing.JButton btnFechar;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jpDadosPlano;
+    private javax.swing.JLabel lblCategoriaPlano;
+    private javax.swing.JLabel lblData;
+    private javax.swing.JLabel lblNomePlano;
+    private javax.swing.JLabel lblTipoPlano;
+    private javax.swing.JPanel panelDinamico;
+    private javax.swing.JTextField txtCategoriaPlano;
+    private javax.swing.JFormattedTextField txtData;
+    private javax.swing.JTextField txtNomePlano;
+    private javax.swing.JTextField txtTipoPlano;
     // End of variables declaration//GEN-END:variables
 }

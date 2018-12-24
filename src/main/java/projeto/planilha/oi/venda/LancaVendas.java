@@ -5,7 +5,7 @@
  */
 package projeto.planilha.oi.venda;
 
-import java.awt.Color;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -36,7 +36,6 @@ public class LancaVendas extends javax.swing.JPanel {
      */
     public LancaVendas() {
         initComponents();
-        System.out.println("lançavendas()");
         DefaultComboBoxModel comboPlano = (DefaultComboBoxModel) ComboBox.getModel();
         ArrayList<Plano> listaDePlano = planoDao.buscarPlanos();
 

@@ -24,23 +24,17 @@ public class PlanoDaoJDBC implements PlanoDao {
 
     @Override
     public ArrayList<Plano> buscarPlanos() {
-        System.out.println("plano DAO");
+
         ArrayList<Plano> listaDePlano = new ArrayList<>();
         ArrayList list = new ArrayList();
         String SQL = "select nome from tb_plano";
         try {
             PreparedStatement SQLPreparada = ConexaoBD.retornaConexao().prepareStatement(SQL);
-
             ResultSet resultado = SQLPreparada.executeQuery();
 
             while (resultado.next()) {
-
                 Plano plano = new Plano();
-                //plano.setCodigo(resultado.getInt("codigo"));
                 plano.setNome(resultado.getString("nome"));
-                //plano.setTipo(resultado.getString("tipo"));
-                //plano.setCategoria(resultado.getString("categoria"));
-                System.out.println(resultado.getString("nome"));
                 listaDePlano.add(plano);
             }
 
@@ -53,7 +47,29 @@ public class PlanoDaoJDBC implements PlanoDao {
 
     @Override
     public Plano incluirPlano(Plano plano) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        String sql = "INSERT "
+                + "INTO "
+                + "tb_plano (nome, tipo, categoria)"
+                + "VALUES (?,?,?)";
+        try {
+
+            PreparedStatement preparacaoDaInstrucao = ConexaoBD.retornaConexao().prepareStatement(sql);
+
+            //preparacaoDaInstrucao.setInt(1, venda.getCodigo());
+            preparacaoDaInstrucao.setString(1, plano.getNome());
+            preparacaoDaInstrucao.setString(2, plano.getTipo());
+            preparacaoDaInstrucao.setString(3, plano.getCategoria());
+            
+
+            preparacaoDaInstrucao.executeUpdate();
+            
+            return plano;
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return null;
+        }
     }
 
     @Override
